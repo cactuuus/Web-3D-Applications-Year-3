@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+
+@theme {
+    /* colors */
+    --color-base: #f8eee5;
+    --color-base-dark: #e2d8d0;
+    --color-primary: #1a1a1a;
+    --color-accent: #c05800;
+    --color-accent-light: #ca762e;
+
+    /* fonts */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+
+    /* shadows */
+    --shadow: 4px 4px 0px var(--color-primary);
+    --shadow-md: 6px 6px 0px var(--color-primary);
+    --shadow-lg: 8px 8px 0px var(--color-primary);
+    --shadow-accent: 4px 4px 0px var(--color-accent);
+    --shadow-accent-md: 6px 6px 0px var(--color-accent);
+    --shadow-accent-lg: 8px 8px 0px var(--color-accent);
+    --drop-shadow-title: 2px 1px 0px var(--color-accent);
+}
+
+body {
+    font-family: var(--font-body);
+}
+
+#banner {
+    @apply text-4xl font-bold font-display text-primary drop-shadow-title hover:text-primary/80 transition-colors;
+}
+
+.link {
+    @apply text-primary hover:bg-accent hover:text-base px-2 transition-all font-bold;
+    &.active {
+        @apply text-accent hover:text-base;
+    }
+}
+
+.btn-primary {
+    @apply py-1 px-3 border-2 border-primary text-primary bg-accent hover:text-base hover:border-accent active:bg-accent-light active:border-accent-light transition-colors inline-block font-bold;
+}
+
+.btn-neutral {
+    @apply py-1 px-2 border-2 border-primary text-primary bg-base hover:bg-accent hover:text-base hover:border-accent  active:bg-accent-light active:border-accent-light transition-colors inline-block font-bold;
+}
+
+.btn-square {
+    @apply p-1;
+}
