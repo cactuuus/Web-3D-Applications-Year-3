@@ -38,11 +38,16 @@ body {
 }
 
 .btn-primary {
-    @apply py-1 px-3 border-2 border-primary text-primary bg-accent hover:text-base hover:border-accent active:bg-accent-light active:border-accent-light transition-colors inline-block font-bold;
+    @apply py-1 px-3 border-2 border-primary text-primary bg-accent hover:text-base hover:border-accent active:bg-accent-light active:border-accent-light transition-colors font-bold flex items-center justify-center gap-2 text-lg cursor-pointer;
 }
 
 .btn-neutral {
-    @apply py-1 px-2 border-2 border-primary text-primary bg-base hover:bg-accent hover:text-base hover:border-accent  active:bg-accent-light active:border-accent-light transition-colors inline-block font-bold;
+    @apply py-1 px-2 border-2 border-primary text-primary bg-base hover:bg-accent hover:text-base hover:border-accent  active:bg-accent-light active:border-accent-light transition-colors font-bold flex items-center justify-center gap-2 text-lg cursor-pointer;
+}
+
+.btn-neutral:disabled,
+.btn-primary:disabled {
+    @apply border-gray-400 text-gray-400 bg-gray-200 cursor-not-allowed hover:bg-gray-200 hover:text-gray-400 hover:border-gray-400;
 }
 
 .btn-square {
