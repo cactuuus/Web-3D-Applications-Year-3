@@ -1,10 +1,10 @@
-import { models } from './models.ts';
+import { models, prettyId } from './models.ts';
 
+const VIEW_MODEL_LINK = 'model-viewer.html?model=';
 const carousel = document.getElementById('model-preview-carousel')!;
 const template = document.getElementById('model-preview-template')! as HTMLTemplateElement;
 const counter = document.getElementById('model-preview-counter')!;
 const total = models.length;
-const viewModelLink = 'model-viewer.html?model=';
 let current = 0;
 
 /**
@@ -22,9 +22,8 @@ function goTo(index: number): void {
 // Using the template, create a preview slide for each model, then appends it to the carousel.
 models.forEach((model) => {
     const previewSlide = template.content.cloneNode(true) as DocumentFragment;
-    const completeId = `${String(model.number).padStart(2, '0')}.${model.id}`;
-    const link = `${viewModelLink}${model.id}`;
-    previewSlide.querySelector('.model-preview-id')!.textContent = completeId;
+    const link = `${VIEW_MODEL_LINK}${model.id}`;
+    previewSlide.querySelector('.model-preview-id')!.textContent = prettyId(model);
     previewSlide.querySelector('.model-preview-name')!.textContent = model.name;
     previewSlide.querySelector('.model-preview-description')!.textContent = model.description;
     (previewSlide.querySelector('.model-preview-link') as HTMLAnchorElement).href = link;
