@@ -4,7 +4,7 @@ const carousel = document.getElementById('model-preview-carousel')!;
 const template = document.getElementById('model-preview-template')! as HTMLTemplateElement;
 const counter = document.getElementById('model-preview-counter')!;
 const total = models.length;
-const viewModelLink = 'model.html?model=';
+const viewModelLink = 'model-viewer.html?model=';
 let current = 0;
 
 /**
