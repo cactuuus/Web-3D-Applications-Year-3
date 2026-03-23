@@ -84,8 +84,8 @@ function setupModelSelect(): void {
  * Sets up the control panel, adding event listeners to each of the 'interacteable' components.
  */
 function setupControlPanel(): void {
-    toggleBtn.addEventListener('click', () => panel.classList.remove('translate-x-full'));
-    closeBtn.addEventListener('click', () => panel.classList.add('translate-x-full'));
+    toggleBtn.addEventListener('click', () => panel.classList.add('-translate-x-full'));
+    closeBtn.addEventListener('click', () => panel.classList.remove('-translate-x-full'));
 
     wireframeInput.addEventListener('change', () => scene.toggleWireframe());
 
