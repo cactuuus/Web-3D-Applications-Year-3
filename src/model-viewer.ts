@@ -1,22 +1,31 @@
+import { environments } from './environments';
 import { models, prettyId, type Model } from './models';
 import { SceneManager } from './scene';
 
-// UI elements
+// --- UI elements
+
+// main
 const canvas = document.getElementById('model-viewer-canvas') as HTMLCanvasElement;
 const modelSelect = document.getElementById('model-select') as HTMLSelectElement;
+
+// animation
 const animationBtn = document.getElementById('btn-toggle-animation') as HTMLButtonElement;
-const panel = document.getElementById('controls-panel')!;
-const toggleBtn = document.getElementById('btn-controls-toggle')!;
-const closeBtn = document.getElementById('btn-controls-close')!;
-const wireframeInput = document.getElementById('input-wireframe') as HTMLInputElement;
-const bgColorInput = document.getElementById('input-bg-color') as HTMLInputElement;
-const lightIntensityInput = document.getElementById('input-light-intensity') as HTMLInputElement;
-const lightColorInput = document.getElementById('input-light-color') as HTMLInputElement;
-const resetSceneBtn = document.getElementById('btn-reset-scene')!;
 const assembleBtnTemplate = document.getElementById('btn-assemble-template') as HTMLTemplateElement;
 const disassembleBtnTemplate = document.getElementById(
     'btn-disassemble-template'
 ) as HTMLTemplateElement;
+
+// control panel
+const panel = document.getElementById('controls-panel')!;
+const toggleBtn = document.getElementById('btn-controls-toggle')!;
+const closeBtn = document.getElementById('btn-controls-close')!;
+const wireframeToggle = document.getElementById('wireframe-toggle') as HTMLInputElement;
+const environmentSelect = document.getElementById('environment-select') as HTMLSelectElement;
+const backgroundBlurInput = document.getElementById('input-bg-blur') as HTMLInputElement;
+const cameraFovInput = document.getElementById('input-camera-fov') as HTMLInputElement;
+const lightIntensityInput = document.getElementById('input-light-intensity') as HTMLInputElement;
+const lightColorInput = document.getElementById('input-light-color') as HTMLInputElement;
+const resetSceneBtn = document.getElementById('btn-reset-scene')!;
 
 // --- Functions
 
@@ -44,10 +53,12 @@ function colorInputToHex(value: string): number {
  * This is used every so often when values in SceneManager are changed programmatically, to ensure the UI reflects those changes.
  */
 function syncValues(): void {
-    wireframeInput.checked = scene.wireframe;
-    bgColorInput.value = hexToColorInput(scene.backgroundColor);
-    lightIntensityInput.value = String(scene.lightIntensity);
-    lightColorInput.value = hexToColorInput(scene.lightColor);
+    wireframeToggle.checked = scene.wireframe;
+    environmentSelect.value = scene.environment.name;
+    backgroundBlurInput.value = String(scene.backgroundBlur);
+    cameraFovInput.value = String(scene.cameraFov);
+    lightIntensityInput.value = String(scene.light.intensity);
+    lightColorInput.value = hexToColorInput(scene.light.color.getHex());
     modelSelect.value = scene.currentModel?.id ?? models[0].id;
 }
 
@@ -84,19 +95,34 @@ function setupModelSelect(): void {
  * Sets up the control panel, adding event listeners to each of the 'interacteable' components.
  */
 function setupControlPanel(): void {
+    // open/close panel
     toggleBtn.addEventListener('click', () => panel.classList.add('-translate-x-full'));
     closeBtn.addEventListener('click', () => panel.classList.remove('-translate-x-full'));
 
-    wireframeInput.addEventListener('change', () => scene.toggleWireframe());
-
-    bgColorInput.addEventListener('input', () => {
-        scene.setBackgroundColor(colorInputToHex(bgColorInput.value));
+    // populate environment select
+    environments.forEach((env) => {
+        const option = document.createElement('option');
+        option.value = env.name;
+        option.textContent = env.name;
+        environmentSelect.appendChild(option);
+    });
+    environmentSelect.addEventListener('change', () => {
+        const env = environments.find((e) => e.name === environmentSelect.value);
+        if (env) scene.loadEnvironment(env);
+        syncValues();
     });
 
+    wireframeToggle.addEventListener('change', () => scene.toggleWireframe());
+    cameraFovInput.addEventListener('input', () => {
+        scene.camera.fov = parseFloat(cameraFovInput.value);
+        scene.camera.updateProjectionMatrix();
+    });
+    backgroundBlurInput.addEventListener('input', () => {
+        scene.setBackgroundBlur(parseFloat(backgroundBlurInput.value));
+    });
     lightIntensityInput.addEventListener('input', () => {
         scene.setLightIntensity(parseFloat(lightIntensityInput.value));
     });
-
     lightColorInput.addEventListener('input', () => {
         scene.setLightColor(colorInputToHex(lightColorInput.value));
     });
@@ -105,7 +131,6 @@ function setupControlPanel(): void {
         scene.resetScene();
         syncValues();
     });
-
     animationBtn.addEventListener('click', () => {
         animationBtn.disabled = true;
         scene.disassemble(scene.isAssembled);
@@ -116,7 +141,7 @@ function setupControlPanel(): void {
 
 // create scene and grab the intial model to load
 const initialModel = getModelFromUrl();
-const scene = new SceneManager(canvas, initialModel);
+const scene = new SceneManager(canvas, initialModel, environments[0]);
 
 // link scene logic to UI
 scene.onModelLoaded = () => syncAnimationButton();

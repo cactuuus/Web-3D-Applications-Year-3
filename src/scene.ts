@@ -1,16 +1,19 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader, type GLTF } from 'three/addons/loaders/GLTFLoader.js';
+import { HDRLoader } from 'three/examples/jsm/Addons.js';
+import { type Environment } from './environments';
 import { type Model } from './models';
 
 // defaults
-const BG_COLOR: number = 0x818181;
+const BLUR: number = 0;
 const FOV: number = 60;
-const CAMERA_INITIAL_POS: THREE.Vector3 = new THREE.Vector3(20, 20, 20);
+const CAMERA_INITIAL_POS: THREE.Vector3 = new THREE.Vector3(10, 5, 10);
 const CAMERA_NEAR: number = 0.1;
 const CAMERA_FAR: number = 1000;
-const LIGHT_COLOR: number = 0xffffff;
-const LIGHT_INTENSITY: number = 0.5;
+const LIGHT_POS: THREE.Vector3 = new THREE.Vector3(5, 5, 5);
+const LIGHT_COLOR: number = 0xffebc1; // warm light color
+const LIGHT_INTENSITY: number = 1;
 
 /**
  * Class to manage the 3D scene, including managing models, camera, lights, etc.
@@ -22,37 +25,45 @@ export class SceneManager {
     readonly camera: THREE.PerspectiveCamera;
     readonly renderer: THREE.WebGLRenderer;
     readonly controls: OrbitControls;
-    readonly loader: GLTFLoader;
     readonly timer: THREE.Timer;
-    readonly lights: THREE.Light[];
+    readonly light: THREE.Light;
     private _mixer: THREE.AnimationMixer | null = null;
     private _actions: THREE.AnimationAction[] = [];
     private _isAssembled: boolean = true;
     private _isWireframe: boolean = false;
-    private _currentModel!: Model; // initialized in loadModel, which is called in the constructor
+    private _model!: Model; // initialized in loadModel, which is called in the constructor
+    private _environment!: Environment;
     onAnimationFinished: (() => void) | null = null;
     onModelLoaded: (() => void) | null = null;
 
-    constructor(canvas: HTMLCanvasElement, model: Model) {
+    constructor(canvas: HTMLCanvasElement, model: Model, environment: Environment) {
         this.canvas = canvas;
         // scene
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(BG_COLOR);
+        this.scene.backgroundBlurriness = BLUR;
         // camera
         this.camera = new THREE.PerspectiveCamera(FOV, 1, CAMERA_NEAR, CAMERA_FAR);
         this.camera.position.copy(CAMERA_INITIAL_POS);
         // renderer
         this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+        this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        this.renderer.toneMappingExposure = 1;
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFShadowMap;
         // controls
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
-        // loader & timer
-        this.loader = new GLTFLoader();
+        // timer
         this.timer = new THREE.Timer();
         // default lights
-        this.lights = [];
-        this._resetLights();
+        this.light = new THREE.DirectionalLight(LIGHT_COLOR, LIGHT_INTENSITY);
+        this.light.castShadow = true;
+        this.light.position.copy(LIGHT_POS);
+        this.scene.add(this.light);
+        // load initial environment
+        this.loadEnvironment(environment);
         // load initial model
         this.loadModel(model);
         // start animation loop
@@ -71,20 +82,32 @@ export class SceneManager {
         return bgColor.getHex();
     }
 
-    get lightIntensity(): number {
-        return this.lights.length > 0 ? this.lights[0].intensity : 0;
-    }
-
-    get lightColor(): number {
-        return this.lights.length > 0 ? this.lights[0].color.getHex() : 0;
-    }
-
     get currentModel(): Model | null {
-        return this._currentModel;
+        return this._model;
     }
 
     get isAssembled(): boolean {
         return this._isAssembled;
+    }
+
+    get environment(): Environment {
+        return this._environment;
+    }
+
+    get cameraFov(): number {
+        return this.camera.fov;
+    }
+
+    get backgroundBlur(): number {
+        return this.scene.backgroundBlurriness;
+    }
+
+    get lightIntensity(): number {
+        return this.light.intensity;
+    }
+
+    get lightColor(): number {
+        return this.light.color.getHex();
     }
 
     // --- Methods
@@ -97,8 +120,9 @@ export class SceneManager {
      */
     loadModel(model: Model): void {
         this._unloadModel();
-        this._currentModel = model;
-        this.loader.load(model.path, (model: GLTF) => {
+        this._model = model;
+        const loader = new GLTFLoader();
+        loader.load(model.path, (model: GLTF) => {
             this.scene.add(model.scene);
             if (model.animations.length > 0) {
                 this._mixer = new THREE.AnimationMixer(model.scene);
@@ -107,7 +131,14 @@ export class SceneManager {
                 });
                 this._actions = model.animations.map((clip) => this._mixer!.clipAction(clip));
             }
-            if (this.onModelLoaded) this.onModelLoaded();
+            // enable shadows
+            this.scene.traverse((object) => {
+                if (object instanceof THREE.Mesh) {
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+                }
+            });
+            this.onModelLoaded?.();
         });
     }
 
@@ -120,8 +151,18 @@ export class SceneManager {
         this._actions = [];
         this._isAssembled = true;
         this._isWireframe = false;
-        // re-add lights after clearing the scene
-        this.lights.forEach((light) => this.scene.add(light));
+        // re-add light after clearing the scene
+        this.scene.add(this.light);
+    }
+
+    loadEnvironment(environment: Environment): void {
+        const loader = new HDRLoader();
+        this._environment = environment;
+        loader.load(this._environment.path, (env) => {
+            env.mapping = THREE.EquirectangularReflectionMapping;
+            this.scene.environment = env;
+            this.scene.background = env;
+        });
     }
 
     /**
@@ -149,9 +190,10 @@ export class SceneManager {
     /**
      * Toggles the 'wireframe view' on and off. It traverses the scene and sets the wireframe property
      * of all materials to new value.
+     * @param state
      */
-    toggleWireframe(): void {
-        this._isWireframe = !this._isWireframe;
+    toggleWireframe(state?: boolean): void {
+        this._isWireframe = state ?? !this._isWireframe;
         this.scene.traverse((object) => {
             if (object instanceof THREE.Mesh) {
                 const materials = Array.isArray(object.material)
@@ -164,28 +206,21 @@ export class SceneManager {
         });
     }
 
-    /**
-     * Sets new background color for the scene.
-     * @param color The new background color, as a hexadecimal number.
-     */
-    setBackgroundColor(color: number): void {
-        this.scene.background = new THREE.Color(color);
+    setBackgroundBlur(value: number): void {
+        this.scene.backgroundBlurriness = value;
     }
 
-    /**
-     * Sets the intensity of all lights in the scene to the given value.
-     * @param intensity The new intensity for the lights.
-     */
-    setLightIntensity(intensity: number): void {
-        this.lights.forEach((light) => (light.intensity = intensity));
+    setCameraFov(value: number): void {
+        this.camera.fov = value;
+        this.camera.updateProjectionMatrix();
     }
 
-    /**
-     * Sets new color for all lights in the scene.
-     * @param color The new color for the lights, as a hexadecimal number.
-     */
-    setLightColor(color: number): void {
-        this.lights.forEach((light) => (light.color = new THREE.Color(color)));
+    setLightIntensity(value: number): void {
+        this.light.intensity = value;
+    }
+
+    setLightColor(value: number): void {
+        this.light.color.setHex(value);
     }
 
     /**
@@ -213,29 +248,16 @@ export class SceneManager {
     }
 
     /**
-     * Resets the lights to their default configuration. It does so by first removing all existing
-     * lights from the scene and clearing the lights array, then re-creating the default lights and
-     * adding them to the scene and the lights array.
-     */
-    private _resetLights(): void {
-        this.lights.forEach((light) => this.scene.remove(light));
-        this.lights.length = 0;
-        const ambientLight = new THREE.AmbientLight(LIGHT_COLOR, LIGHT_INTENSITY);
-        const directionalLight = new THREE.DirectionalLight(LIGHT_COLOR, LIGHT_INTENSITY);
-        directionalLight.position.set(5, 10, 7.5);
-        this.scene.add(ambientLight, directionalLight);
-        this.lights.push(ambientLight, directionalLight);
-    }
-
-    /**
      * Resets the scene to its initial state. It resets the background color, wireframe mode, lights, and
      * camera position and controls target. Note that it does not unload the current model, so the model
      * will remain in the scene after resetting.
      */
     resetScene(): void {
-        this.scene.background = new THREE.Color(BG_COLOR);
-        this._isWireframe = false;
-        this._resetLights();
+        this.toggleWireframe(false);
+        this.setBackgroundBlur(BLUR);
+        this.setCameraFov(FOV);
+        this.setLightIntensity(LIGHT_INTENSITY);
+        this.setLightColor(LIGHT_COLOR);
         this.camera.position.copy(CAMERA_INITIAL_POS);
         this.controls.target.set(0, 0, 0);
         this.controls.update();

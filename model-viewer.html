@@ -29,14 +29,14 @@
         <div class="h-16 opacity-0"></div>
 
         <main class="flex flex-col gap-6 sm:gap-12 px-4 sm:px-6 py-6 sm:p-12">
-            <div class="relative flex overflow-hidden shadow-accent border-2 border-primary">
+            <div class="relative flex overflow-hidden shadow-accent-lg border-2 border-primary">
                 <canvas id="model-viewer-canvas" class="w-full h-[80vh] min-h-80 block"></canvas>
 
                 <!-- model selector -->
                 <div class="absolute top-2 left-2 z-10 group">
                     <select
                         id="model-select"
-                        class="btn-neutral h-10 appearance-none pr-8 cursor-pointer"
+                        class="btn-neutral appearance-none pr-8 cursor-pointer"
                     >
                         <!-- options are injected via js -->
                     </select>
@@ -45,37 +45,33 @@
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="lucide lucide-chevron-down-icon lucide-chevron-down"
+                            class="lucide lucide-chevron-down-icon lucide-chevron-down h-4 w-4"
                         >
                             <path d="m6 9 6 6 6-6" />
                         </svg>
                     </div>
                 </div>
 
-                <div class="absolute top-2 left-1/2 -translate-x-1/2 z-10">
+                <div class="absolute bottom-2 left-2 z-10">
                     <button id="btn-toggle-animation" class="btn-primary w-full" disabled>
                         Loading...
                     </button>
                     <template id="btn-disassemble-template">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="lucide lucide-hammer-icon lucide-hammer"
+                            class="lucide lucide-hammer-icon lucide-hammer w-4 h-4"
                         >
                             <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
                             <path d="m18 15 4-4" />
@@ -89,15 +85,13 @@
                     <template id="btn-assemble-template">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="lucide lucide-undo2-icon lucide-undo-2"
+                            class="lucide lucide-undo2-icon lucide-undo-2 w-4 h-4"
                         >
                             <path d="M9 14 4 9l5-5" />
                             <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" />
@@ -109,19 +103,17 @@
                 <!-- controls menu toggle -->
                 <button
                     id="btn-controls-toggle"
-                    class="absolute top-2 right-2 btn-neutral h-10 z-10"
+                    class="absolute top-2 right-2 btn-neutral btn-square z-10"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="lucide lucide-menu-icon lucide-menu"
+                        class="lucide lucide-menu-icon lucide-menu w-5 h-5"
                     >
                         <path d="M4 5h16" />
                         <path d="M4 12h16" />
@@ -134,6 +126,7 @@
                     id="controls-panel"
                     class="absolute top-0 -right-72 h-[80vh] min-h-80 w-72 bg-base border-l-2 border-primary transition-transform duration-300 z-20 overflow-y-auto flex flex-col"
                 >
+                    <!-- header -->
                     <div
                         class="flex items-center justify-between px-4 py-3 border-b-2 border-primary"
                     >
@@ -141,50 +134,90 @@
                         <button id="btn-controls-close" class="btn-neutral btn-square">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
+                                class="lucide lucide-x-icon lucide-x w-4 h-4"
                             >
                                 <path d="M18 6 6 18M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
 
-                    <!-- general settings -->
-                    <div class="px-4 py-3 flex flex-col gap-2">
-                        <h3 class="font-bold">General</h3>
+                    <!-- controls -->
+                    <div class="px-4 py-3 flex flex-col gap-4">
+                        <!-- wireframe toggle -->
                         <div class="flex items-baseline justify-between gap-2">
-                            <label for="input-wireframe">Wireframe</label>
+                            <label for="wireframe-toggle">Wireframe</label>
                             <input
                                 type="checkbox"
-                                id="input-wireframe"
+                                id="wireframe-toggle"
                                 class="w-5 h-5 accent-accent cursor-pointer"
                             />
                         </div>
 
+                        <!-- environment select -->
                         <div class="flex items-baseline justify-between gap-2">
-                            <label for="input-bg-color">Background</label>
+                            <label for="environment-select">Environment</label>
+                            <div class="relative w-32 group">
+                                <select
+                                    id="environment-select"
+                                    id="model-select"
+                                    class="btn-neutral w-full appearance-none pr-8 cursor-pointer text-sm"
+                                >
+                                    <!-- options are injected via js -->
+                                </select>
+                                <div
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-primary group-hover:text-base transition-colors"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-chevron-down-icon lucide-chevron-down w-4 h-4"
+                                    >
+                                        <path d="m6 9 6 6 6-6" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- background blur -->
+                        <div class="flex items-center justify-between">
+                            <label for="input-bg-blur">Background Blur</label>
                             <input
-                                type="color"
-                                id="input-bg-color"
-                                class="w-32 h-5 cursor-pointer"
+                                type="range"
+                                id="input-bg-blur"
+                                min="0"
+                                max="1"
+                                step="0.1"
+                                class="w-32 accent-accent"
                             />
                         </div>
-                    </div>
 
-                    <hr class="border-primary/20 border-t-2" />
-
-                    <!-- lights -->
-                    <div class="px-4 py-3 flex flex-col gap-2">
-                        <h3 class="font-bold">Lights</h3>
-
+                        <!-- camera fov -->
                         <div class="flex items-center justify-between">
-                            <label for="input-light-intensity">Intensity</label>
+                            <label for="input-camera-fov">Camera FOV</label>
+                            <input
+                                type="range"
+                                id="input-camera-fov"
+                                min="30"
+                                max="120"
+                                step="1"
+                                class="w-32 accent-accent"
+                            />
+                        </div>
+
+                        <!-- directional light intensity -->
+                        <div class="flex items-center justify-between">
+                            <label for="input-light-intensity">Light intensity</label>
                             <input
                                 type="range"
                                 id="input-light-intensity"
@@ -195,8 +228,9 @@
                             />
                         </div>
 
+                        <!-- directional light color -->
                         <div class="flex items-center justify-between">
-                            <label for="input-light-color">Color</label>
+                            <label for="input-light-color">Light color</label>
                             <input
                                 type="color"
                                 id="input-light-color"
@@ -212,15 +246,13 @@
                         <button id="btn-reset-scene" class="btn-neutral w-full">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw"
+                                class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw w-4 h-4"
                             >
                                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                                 <path d="M3 3v5h5" />

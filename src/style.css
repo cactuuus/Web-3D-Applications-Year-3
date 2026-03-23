@@ -38,11 +38,11 @@ body {
 }
 
 .btn-primary {
-    @apply py-1 px-3 border-2 border-primary text-primary bg-accent hover:text-base hover:border-accent active:bg-accent-light active:border-accent-light transition-colors font-bold flex items-center justify-center gap-2 text-lg cursor-pointer;
+    @apply py-1 px-3 border-2 border-primary text-primary bg-accent hover:text-base hover:border-accent active:bg-accent-light active:border-accent-light transition-colors font-bold flex items-center justify-center gap-2 cursor-pointer;
 }
 
 .btn-neutral {
-    @apply py-1 px-2 border-2 border-primary text-primary bg-base hover:bg-accent hover:text-base hover:border-accent  active:bg-accent-light active:border-accent-light transition-colors font-bold flex items-center justify-center gap-2 text-lg cursor-pointer;
+    @apply py-1 px-2 border-2 border-primary text-primary bg-base hover:bg-accent hover:text-base hover:border-accent  active:bg-accent-light active:border-accent-light transition-colors font-bold flex items-center justify-center gap-2 cursor-pointer;
 }
 
 .btn-neutral:disabled,
