@@ -28,8 +28,16 @@
         <!-- spacer for the header, pushing main down -->
         <div class="h-16 opacity-0"></div>
 
-        <main class="flex flex-col gap-6 sm:gap-12 px-4 sm:px-6 py-6 sm:p-12">
-            <div class="relative flex overflow-hidden shadow-accent-lg border-2 border-primary">
+        <main class="flex flex-col gap-6 sm:gap-8 px-4 sm:px-6 py-6 sm:py-8 mb-8">
+            <div id="model-info-header" class="p-4 bg-base border-2 border-primary shadow-lg">
+                <h2 id="model-info-title" class="font-display text-4xl font-bold text-center">
+                    Loading...
+                </h2>
+            </div>
+
+            <section
+                class="relative flex overflow-hidden shadow-accent-lg border-2 border-primary mx-2 sm:mx-4"
+            >
                 <canvas id="model-viewer-canvas" class="w-full h-[80vh] min-h-80 block"></canvas>
 
                 <!-- model selector -->
@@ -261,7 +269,14 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- model info panel -->
+            <section id="model-info-section">
+                <div id="model-info-content">
+                    <!-- content injected via js -->
+                </div>
+            </section>
         </main>
     </body>
 </html>

@@ -1,5 +1,6 @@
 const MODELS_PATH_PREFIX = 'assets/models/';
 const PREVIEWS_PATH_PREFIX = 'assets/previews/';
+const INFO_PATH_PREFIX = 'assets/info/';
 
 /**
  * Simple interface to represent the model's metadata.
@@ -11,6 +12,7 @@ export interface Model {
     description: string;
     path: string;
     preview: string;
+    content: string;
 }
 
 /**
@@ -31,6 +33,7 @@ export const models: Model[] = [
             'Invented in 1933 by Alfonso Bialetti, the moka pot brews coffee by passing boiling water pressurised by steam through ground coffee. The result is a strong, rich brew that is a staple in Italian households and cafes.',
         path: `${MODELS_PATH_PREFIX}moka.glb`,
         preview: `${PREVIEWS_PATH_PREFIX}moka.webp`,
+        content: `${INFO_PATH_PREFIX}moka.html`,
     },
     {
         id: 'chemex',
@@ -40,6 +43,7 @@ export const models: Model[] = [
             'Designed in 1941 by chemist Peter Schlumbohm, the Chemex is as much sculpture as it is a brewer. A single piece of borosilicate glass, often accompanied by a wooden collar and a leather tie. A perfect blend of style and efficiency.',
         path: `${MODELS_PATH_PREFIX}chemex.glb`,
         preview: `${PREVIEWS_PATH_PREFIX}chemex.webp`,
+        content: `${INFO_PATH_PREFIX}chemex.html`,
     },
     {
         id: 'aeropress',
@@ -49,5 +53,6 @@ export const models: Model[] = [
             "Born in 2005 from Alan Adler's obsession with coffee, the Aeropress is incredibly simple in concept and execution. Despite this, this little brewer is renowned for its flexibility and wide range of brewing techniques.",
         path: `${MODELS_PATH_PREFIX}aeropress.glb`,
         preview: `${PREVIEWS_PATH_PREFIX}aeropress.webp`,
+        content: `${INFO_PATH_PREFIX}aeropress.html`,
     },
 ];

@@ -86,8 +86,10 @@ function setupModelSelect(): void {
     });
     modelSelect.addEventListener('change', () => {
         const model = models.find((m) => m.id === modelSelect.value);
-        if (model) scene.loadModel(model);
-        syncValues();
+        if (model) {
+            injectModelInfo(model);
+            scene.loadModel(model);
+        }
     });
 }
 
@@ -137,14 +139,28 @@ function setupControlPanel(): void {
     });
 }
 
+async function injectModelInfo(model: Model) {
+    const infoContainer = document.getElementById('model-info-content')!;
+    const titleElement = document.getElementById('model-info-title')!;
+    titleElement.textContent = 'Loading...';
+    const response = await fetch(model.content);
+    const html = await response.text();
+    titleElement.textContent = model.name;
+    infoContainer.innerHTML = html;
+}
+
 // --- Setup
 
 // create scene and grab the intial model to load
 const initialModel = getModelFromUrl();
 const scene = new SceneManager(canvas, initialModel, environments[0]);
+injectModelInfo(initialModel);
 
 // link scene logic to UI
-scene.onModelLoaded = () => syncAnimationButton();
+scene.onModelLoaded = () => {
+    syncAnimationButton();
+    syncValues();
+};
 scene.onAnimationFinished = () => syncAnimationButton();
 setupModelSelect();
 setupControlPanel();
