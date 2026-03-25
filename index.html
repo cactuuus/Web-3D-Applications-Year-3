@@ -107,11 +107,16 @@
 
         <!-- model preview template -->
         <template id="model-preview-template">
-            <div class="min-w-full flex">
+            <div class="min-w-full flex group">
                 <!-- simple stylistic spacer, mostly to avoid dealing with overlapping buttons/text on mobile -->
                 <div class="sm:hidden w-12 bg-primary/10 border-r-2 shrink-0"></div>
                 <div class="hidden sm:block w-1/3 bg-primary/30 aspect-video border-r-2">
                     <!-- model preview/image -->
+                    <img
+                        src=""
+                        alt=""
+                        class="model-preview-image object-cover w-full h-full origin-center grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 duration-300"
+                    />
                 </div>
                 <div class="p-8 flex flex-col justify-between items-start border-primary">
                     <div>

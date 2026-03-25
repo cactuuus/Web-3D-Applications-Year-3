@@ -23,10 +23,14 @@ function goTo(index: number): void {
 models.forEach((model) => {
     const previewSlide = template.content.cloneNode(true) as DocumentFragment;
     const link = `${VIEW_MODEL_LINK}${model.id}`;
-    previewSlide.querySelector('.model-preview-id')!.textContent = prettyId(model);
+    const id = prettyId(model);
+    previewSlide.querySelector('.model-preview-id')!.textContent = id;
     previewSlide.querySelector('.model-preview-name')!.textContent = model.name;
     previewSlide.querySelector('.model-preview-description')!.textContent = model.description;
     (previewSlide.querySelector('.model-preview-link') as HTMLAnchorElement).href = link;
+    const imageElement = previewSlide.querySelector('.model-preview-image') as HTMLImageElement;
+    imageElement.src = model.preview;
+    imageElement.alt = id;
     carousel.appendChild(previewSlide);
 });
 
