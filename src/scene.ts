@@ -146,7 +146,19 @@ export class SceneManager {
      * Helper method to unload the current model from the scene and reset all related properties.
      */
     private _unloadModel(): void {
+        // dispose of all meshes and materials to free up memory, then clear the scene
+        this.scene.traverse((object) => {
+            if (object instanceof THREE.Mesh) {
+                object.geometry.dispose();
+                if (Array.isArray(object.material)) {
+                    object.material.forEach((mat) => mat.dispose());
+                } else {
+                    object.material.dispose();
+                }
+            }
+        });
         this.scene.clear();
+
         this._mixer = null;
         this._actions = [];
         this._isAssembled = true;
