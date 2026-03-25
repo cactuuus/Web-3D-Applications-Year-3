@@ -13,7 +13,9 @@ const CAMERA_NEAR: number = 0.1;
 const CAMERA_FAR: number = 1000;
 const LIGHT_POS: THREE.Vector3 = new THREE.Vector3(5, 5, 5);
 const LIGHT_COLOR: number = 0xffebc1; // warm light color
-const LIGHT_INTENSITY: number = 1;
+const LIGHT_SHADOW_BIAS: number = -0.0001; // helps reduce shadow artifacts
+const LIGHT_SHADOW_MAP_SIZE: number = 2048; // quality of shadows
+const LIGHT_INTENSITY: number = 1.5;
 
 /**
  * Class to manage the 3D scene, including managing models, camera, lights, etc.
@@ -26,7 +28,7 @@ export class SceneManager {
     readonly renderer: THREE.WebGLRenderer;
     readonly controls: OrbitControls;
     readonly timer: THREE.Timer;
-    readonly light: THREE.Light;
+    readonly light: THREE.DirectionalLight;
     private _mixer: THREE.AnimationMixer | null = null;
     private _actions: THREE.AnimationAction[] = [];
     private _isAssembled: boolean = true;
@@ -60,6 +62,8 @@ export class SceneManager {
         // default lights
         this.light = new THREE.DirectionalLight(LIGHT_COLOR, LIGHT_INTENSITY);
         this.light.castShadow = true;
+        this.light.shadow.bias = LIGHT_SHADOW_BIAS;
+        this.light.shadow.mapSize.set(LIGHT_SHADOW_MAP_SIZE, LIGHT_SHADOW_MAP_SIZE);
         this.light.position.copy(LIGHT_POS);
         this.scene.add(this.light);
         // load initial environment
