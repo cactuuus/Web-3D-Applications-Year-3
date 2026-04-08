@@ -1,8 +1,8 @@
 # To do
 
 [ ] add slider for shadow's quality (NONE - LOW (default) - MID - HIGH) \
-[ ] make aeropress model \
-[ ] make aeropress info fragment \
+[x] make aeropress model \
+[x] make aeropress info fragment \
 [ ] do about page \
 
 # General notes
