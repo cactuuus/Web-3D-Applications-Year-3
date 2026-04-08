@@ -26,14 +26,14 @@ export function prettyId(model: Model): string {
 
 export const models: Model[] = [
     {
-        id: 'moka',
+        id: 'aeropress',
         number: 1,
-        name: 'The Moka Pot',
+        name: 'The Aeropress',
         description:
-            'Invented in 1933 by Alfonso Bialetti, the moka pot brews coffee by passing boiling water pressurised by steam through ground coffee. The result is a strong, rich brew that is a staple in Italian households and cafes.',
-        path: `${MODELS_PATH_PREFIX}moka.glb`,
-        preview: `${PREVIEWS_PATH_PREFIX}moka.webp`,
-        content: `${INFO_PATH_PREFIX}moka.html`,
+            "Born in 2005 from Alan Adler's obsession with coffee, the Aeropress is incredibly simple in concept and execution. Despite this, this little brewer is renowned for its flexibility and wide range of brewing techniques.",
+        path: `${MODELS_PATH_PREFIX}aeropress.glb`,
+        preview: `${PREVIEWS_PATH_PREFIX}aeropress.webp`,
+        content: `${INFO_PATH_PREFIX}aeropress.html`,
     },
     {
         id: 'chemex',
@@ -46,13 +46,13 @@ export const models: Model[] = [
         content: `${INFO_PATH_PREFIX}chemex.html`,
     },
     {
-        id: 'aeropress',
+        id: 'moka',
         number: 3,
-        name: 'The Aeropress',
+        name: 'The Moka Pot',
         description:
-            "Born in 2005 from Alan Adler's obsession with coffee, the Aeropress is incredibly simple in concept and execution. Despite this, this little brewer is renowned for its flexibility and wide range of brewing techniques.",
-        path: `${MODELS_PATH_PREFIX}aeropress.glb`,
-        preview: `${PREVIEWS_PATH_PREFIX}aeropress.webp`,
-        content: `${INFO_PATH_PREFIX}aeropress.html`,
+            'Invented in 1933 by Alfonso Bialetti, the moka pot brews coffee by passing boiling water pressurised by steam through ground coffee. The result is a strong, rich brew that is a staple in Italian households and cafes.',
+        path: `${MODELS_PATH_PREFIX}moka.glb`,
+        preview: `${PREVIEWS_PATH_PREFIX}moka.webp`,
+        content: `${INFO_PATH_PREFIX}moka.html`,
     },
 ];
