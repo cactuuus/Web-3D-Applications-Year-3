@@ -24,6 +24,9 @@ export function prettyId(model: Model): string {
     return `${String(model.number).padStart(2, '0')}.${model.id}`;
 }
 
+/**
+ * List of all models available.
+ */
 export const models: Model[] = [
     {
         id: 'aeropress',

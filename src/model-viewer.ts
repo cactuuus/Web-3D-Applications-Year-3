@@ -30,7 +30,7 @@ const resetSceneBtn = document.getElementById('btn-reset-scene')!;
 // --- Functions
 
 /**
- * Gets the model specified in the URL query parameters, or defaults to the first model if no valid
+ * Gets the model specified in the URL query parameters, defaulting to the first model if no valid
  * model is specified.
  * @returns The model to load based on the URL query parameters or a default model (first in the list).
  */
@@ -40,17 +40,28 @@ function getModelFromUrl(): Model {
     return models.find((m) => m.id === id) ?? models[0];
 }
 
+/**
+ * Helper function to format a numeric HEX value to the format recognized by the HTML color input.
+ * @param hex The HEX value to convert.
+ * @returns The string representation of the HEX value, as recognized by the HTML color input.
+ */
 function hexToColorInput(hex: number): string {
     return `#${hex.toString(16).padStart(6, '0')}`;
 }
 
+/**
+ * Helper function to format a HTML color input value to numeric HEX.
+ * @param value The HTML color input value to convert.
+ * @returns The numeric HEX representation of the given value.
+ */
 function colorInputToHex(value: string): number {
     return parseInt(value.replace('#', ''), 16);
 }
 
 /**
  * Syncs (most of) the values in the UI to match the current state of the scene.
- * This is used every so often when values in SceneManager are changed programmatically, to ensure the UI reflects those changes.
+ * This is used every so often when values in SceneManager are changed programmatically, to ensure
+ * the UI reflects those changes.
  */
 function syncValues(): void {
     wireframeToggle.checked = scene.wireframe;
@@ -74,8 +85,8 @@ function syncAnimationButton(): void {
 }
 
 /**
- * Sets up the model select dropdown, populating it with options for each model and setting up an event
- * listener to update the scene when a new model is selected.
+ * Sets up the model select dropdown, populating it with options for each model and setting up an
+ * event listener to update the scene when a new model is selected.
  */
 function setupModelSelect(): void {
     models.forEach((model) => {
@@ -94,7 +105,7 @@ function setupModelSelect(): void {
 }
 
 /**
- * Sets up the control panel, adding event listeners to each of the 'interacteable' components.
+ * Sets up the control panel, adding event listeners to each of the interactive components.
  */
 function setupControlPanel(): void {
     // open/close panel

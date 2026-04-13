@@ -5,7 +5,7 @@ import { HDRLoader } from 'three/examples/jsm/Addons.js';
 import { type Environment } from './environments';
 import { type Model } from './models';
 
-// defaults
+// default values
 const BLUR: number = 0;
 const FOV: number = 60;
 const CAMERA_INITIAL_POS: THREE.Vector3 = new THREE.Vector3(10, 5, 10);
@@ -34,7 +34,7 @@ export class SceneManager {
     private _isAssembled: boolean = true;
     private _isWireframe: boolean = false;
     private _model!: Model; // initialized in loadModel, which is called in the constructor
-    private _environment!: Environment;
+    private _environment!: Environment; // also initialized in loadModel
     onAnimationFinished: (() => void) | null = null;
     onModelLoaded: (() => void) | null = null;
 
@@ -59,16 +59,15 @@ export class SceneManager {
         this.controls.enableDamping = true;
         // timer
         this.timer = new THREE.Timer();
-        // default lights
+        // default light
         this.light = new THREE.DirectionalLight(LIGHT_COLOR, LIGHT_INTENSITY);
         this.light.castShadow = true;
         this.light.shadow.bias = LIGHT_SHADOW_BIAS;
         this.light.shadow.mapSize.set(LIGHT_SHADOW_MAP_SIZE, LIGHT_SHADOW_MAP_SIZE);
         this.light.position.copy(LIGHT_POS);
         this.scene.add(this.light);
-        // load initial environment
+        // load initial environment & model
         this.loadEnvironment(environment);
-        // load initial model
         this.loadModel(model);
         // start animation loop
         this._animate();
@@ -78,12 +77,6 @@ export class SceneManager {
 
     get wireframe(): boolean {
         return this._isWireframe;
-    }
-
-    get backgroundColor(): number {
-        // for now, we assume the background is always a color (not a texture or something else)
-        const bgColor = this.scene.background as THREE.Color;
-        return bgColor.getHex();
     }
 
     get currentModel(): Model | null {
@@ -118,8 +111,8 @@ export class SceneManager {
 
     /**
      * Loads the given model into the scene, replacing any existing model.
-     * If the model has animations (it is expected to have one), it sets up the mixer and actions for
-     * controlling the animation playback.
+     * If the model has animations (it is expected to have exactly one), it sets up the mixer and
+     * actions for controlling the animation playback.
      * @param model The model to load into the scene.
      */
     loadModel(model: Model): void {
@@ -162,7 +155,6 @@ export class SceneManager {
             }
         });
         this.scene.clear();
-
         this._mixer = null;
         this._actions = [];
         this._isAssembled = true;
@@ -171,6 +163,10 @@ export class SceneManager {
         this.scene.add(this.light);
     }
 
+    /**
+     * Loads the given environment map as the scene's background.
+     * @param environment The environment to load into the scene.
+     */
     loadEnvironment(environment: Environment): void {
         const loader = new HDRLoader();
         this._environment = environment;
@@ -206,7 +202,7 @@ export class SceneManager {
     /**
      * Toggles the 'wireframe view' on and off. It traverses the scene and sets the wireframe property
      * of all materials to new value.
-     * @param state
+     * @param state Optional boolean to enforce a state. If not provided, it flips the current state.
      */
     toggleWireframe(state?: boolean): void {
         this._isWireframe = state ?? !this._isWireframe;
@@ -222,19 +218,35 @@ export class SceneManager {
         });
     }
 
+    /**
+     * Sets the blurriness of the scene's background.
+     * @param value The new blur value to assign.
+     */
     setBackgroundBlur(value: number): void {
         this.scene.backgroundBlurriness = value;
     }
 
+    /**
+     * Sets the camera's FOV.
+     * @param value The new FOV value to assign.
+     */
     setCameraFov(value: number): void {
         this.camera.fov = value;
         this.camera.updateProjectionMatrix();
     }
 
+    /**
+     * Sets intensity of the spotlight.
+     * @param value The new intensity value to assign.
+     */
     setLightIntensity(value: number): void {
         this.light.intensity = value;
     }
 
+    /**
+     * Set the color of the spotlight
+     * @param value The new color to assign, in HEX format.
+     */
     setLightColor(value: number): void {
         this.light.color.setHex(value);
     }

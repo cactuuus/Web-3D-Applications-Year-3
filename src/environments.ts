@@ -1,11 +1,17 @@
 const PATH_PREFIX = 'assets/environments/';
 
+/**
+ * Interface to represent environments, which are HDRIs that can be used for the scene's background.
+ */
 export interface Environment {
     name: string;
     source: string;
     path: string;
 }
 
+/**
+ * List of all available environments.
+ */
 export const environments: Environment[] = [
     {
         name: 'Garden',
