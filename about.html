@@ -29,7 +29,16 @@
                     About
                     <span class="text-accent">Drip.</span>
                 </h1>
-                <p>TODO</p>
+                <p>
+                    <strong>Drip</strong> is a small website created for the
+                    <strong>University of Sussex</strong>'s
+                    <strong>Web 3D Applications</strong> module.
+                </p>
+                <p class="mt-1">
+                    I followed a coffee theme, modelling a few brewing devices (a Moka pot, a
+                    Chemex, and an AeroPress). Each of these items is showcased in the website,
+                    along with a few interesting facts about them.
+                </p>
             </section>
 
             <!-- 3D Models -->
@@ -37,47 +46,309 @@
                 <!-- Overview -->
                 <div>
                     <h2 class="mb-2 sm:mb-4">3D Models</h2>
-                    <p>TODO</p>
+                    <p>
+                        All 3D models were built from scratch in <strong>Blender</strong> and then
+                        exported as <code>.glb</code> files. Various materials were used across
+                        models, some taken from
+                        <a href="https://www.poliigon.com/" target="_blank" class="secondary-link"
+                            >Poliigon</a
+                        >
+                        and
+                        <a href="https://www.blenderkit.com/" target="_blank" class="secondary-link"
+                            >BlenderKit</a
+                        >, and some simple ones created by me.
+                    </p>
+                    <p class="mt-1">
+                        All models have a fairly high polygon count. They could be greatly optimized
+                        by reducing the geometry (via a <code>decimate</code> modifier, for
+                        example), but for this project I wanted them to feel as detailed and
+                        polished as possible, even at the cost of performance, especially
+                        considering that this website only ever render one model at the time.
+                    </p>
+                    <p class="mt-1">
+                        For consistency, I added a single animation to each model which operates the
+                        same way in all of them: it 'disassembles' the item into its components (and
+                        're-assembles' it when played in reverse). They all use keyframes for
+                        translating and rotating these components, without the need for more complex
+                        approaches (like setting up <code>armatures</code>).
+                        <br />
+                        Because of the high level of detail in the models, this approach is still
+                        satisfying and, I think, quite functional, allowing to take a deeper look
+                        into how these brewers are made.
+                    </p>
                 </div>
 
                 <!-- Moka -->
                 <div>
-                    <h3 class="mb-2 text-accent">Moka Pot</h3>
-                    <p>TODO</p>
+                    <h3 class="mb-2 text-accent">Moka</h3>
+                    <p>
+                        The Moka pot was the first object I modelled, and by far the one I spent the
+                        most time on.
+                    </p>
+                    <p class="mt-1">
+                        The body of the model is made of a mix of sharp edges/corners and smooth
+                        joins. For this, I used <code>auto-smooth</code>, setting
+                        <code>sharp</code> edges when needed, which gives the desired industrial,
+                        'unpolished' effect.
+                        <br />
+                        The handle, top knob, and the filters required much more detail, so they
+                        were given a <code>subsurface</code> modifier. I believe this, along with
+                        the materials used, is the main reason why the resulting
+                        <code>glb</code> file is so large.
+                    </p>
+                    <p class="mt-1">
+                        Because of my lack of experience, I ended up doing a lot of manual work
+                        connecting vertices and reshaping faces, which, with insight, could've been
+                        done much faster and with better results by using the correct modifiers and
+                        other tools (such as <code>creases</code> instead of
+                        <code>sharp</code> edges).
+                    </p>
                 </div>
 
                 <!-- Chemex -->
                 <div>
                     <h3 class="mb-2 text-accent">Chemex</h3>
-                    <p>TODO</p>
+                    <p>The Chemex was the second object I designed, likely the simplest overall.</p>
+                    <p class="mt-1">
+                        This model is made of mostly smooth surfaces, so all of the components
+                        (besides the rope) were given a `subsurface` modifier. The few 'sharper'
+                        edges were hadnled by simply adding more <code>edge loops</code> and
+                        adjusting the edges' <code>crease</code> value.
+                    </p>
+                    <p class="mt-1">
+                        One of the main challenges I had with this model was creasting the
+                        glass-like material. I initialy tried to use some pre-built materials from
+                        <strong>BlenderKit</strong>, but none of them exported well to
+                        <code>glb</code>, so I ended up creating a custom one, which required a lot
+                        of trial and error to look right. The second main challenge was animating
+                        the rope, for which I tried many different ideas:
+                    </p>
+
+                    <ul class="list-disc list-inside ml-2 sm:ml-4">
+                        <li><code>geometry nodes</code> to fade it out layer by layer.</li>
+                        <li>
+                            turning it into a <code>curve</code> and keyframing the
+                            <code>bevel level</code> to 'fade it out' from one end to the other.
+                        </li>
+                        <li>
+                            using <code>soft-body</code> and <code>cloth</code> modifiers to
+                            simulate 'untying' the lace and remove it from the Chemex.
+                        </li>
+                        <li>
+                            just fading it out by keyframing the material's
+                            <code>alpha</code> value.
+                        </li>
+                    </ul>
+                    <p>
+                        All of them worked (to various degrees) in <strong>Blender</strong>, but
+                        none exported to <code>glb</code>. I was stuck on this for an entire day,
+                        until I eventually decided to instead animate the rope by simply
+                        'stretching' it. I have done so by keyframing two <code>state keys</code>:
+                        the base state, and the a 'stretched' version, which accounts fot the other
+                        components' positions at the end of their animation. To do this, I simply
+                        manually streched the mesh using <code>proportional editing</code> to ensure
+                        the shape stays consistent as I move and stretch it around. The overall
+                        result is far from what I hoped to achieve, but it's good all considered!
+                    </p>
                 </div>
 
                 <!-- AeroPress -->
                 <div>
                     <h3 class="mb-2 text-accent">AeroPress</h3>
-                    <p>TODO</p>
+                    <p>
+                        The last model I developed, and the one I am most proud of, as I think it
+                        has the best balance of detail and simplicity. I particularly like the label
+                        being 'embedded' into the outer, plastic tube, and the see-through effect of
+                        the main body. The latter was a big hurdle in the Chemex model, while this
+                        time I figured out how to make a good looking see-through material, by
+                        learning the proper difference between
+                        <code>alpha</code> (transparency) and <code>transmission</code>.
+                    </p>
+                    <p class="mt-1">
+                        For the label, I added some text to the model, using a font that best
+                        matched the original. I then coverted the text to a mesh, then applied a
+                        <code>decimate</code> modifier to it, which greatly reduced its geometry.
+                        Lastly, I used a <code>shrinkwrap</code> modifier to 'wrap' it around the
+                        tube. The original idea was to then apply a <code>boolean</code> modifier to
+                        'engrave' the text into the plastic, but I eventually decided against it, as
+                        I preferred the current look more.
+                    </p>
+                    <p class="mt-1">
+                        Lastly, for the 'cap/basket' component was a little complex, I made a series
+                        of cylinders and used a
+                        <code>boolean</code> modifier to use them to 'cut' the holes into it, which
+                        overall looked good, considering I was going for a more 'industrial' look
+                        (essentially sharper edges). The pattern on the side was a bit more
+                        difficult and manual, basically extruding and deleting extra-faces to get to
+                        the desired look.
+                    </p>
+                    <p class="mt-1">
+                        Animations follow the same pattern as the rest, basically taking the
+                        components apart by keyframing them: the cap rotates and moves down,
+                        revealing a paper filter in the process, while the plunger is pulled up. It
+                        is simple but I really liked it, especially paired with the see-through
+                        material.
+                    </p>
                 </div>
             </section>
 
             <!-- Design -->
-            <section id="design" class="boxed shadow-md flex flex-col gap-4 sm:gap-6">
+            <section id="design" class="boxed shadow-md">
                 <h2 class="mb-2 sm:mb-4">Design</h2>
-                <p>TODO</p>
+                <p>
+                    The website sytyle is fairly simple: sharp borders, shadows, boxy components,
+                    and a warm color pallette consisting of shades of brown, orange, and black for
+                    good contrast and readability. This was done using a mix of
+                    <strong>Tailwind</strong> and custom <strong>CSS</strong>.
+                </p>
+                <p class="mt-1">
+                    I wanted to keep the layout simple as well: all pages have a consistent header
+                    (used for navigation), and uses boxes to organize various content. The layout is
+                    fully responsive and adapts to different screen sizes. Elements shrink and grow
+                    with the screen, switching between row and column layout when needed, and some
+                    non-essential content (such as the carousel images in the index page) is hidden
+                    on smaller screens to avoid clutter.
+                </p>
+                <p class="mt-1">
+                    Semantic <strong>HTML</strong> elements are used throughout the website, and
+                    <code>alt</code> attributes were used for all images, which help accessibility.
+                    Screen readers support however, was not a priority: considering the main focus
+                    of this website is the 3D models, there would be no way to make it fully
+                    accessible to visually impaired users regardless.
+                </p>
             </section>
 
             <!-- Integration -->
-            <section id="integration" class="boxed shadow-md flex flex-col gap-4 sm:gap-6">
+            <section id="integration" class="boxed shadow-md">
                 <h2 class="mb-2 sm:mb-4">Integration</h2>
-                <p>TODO</p>
+                <p>
+                    To display the models in the website, I used an Model-View-Controller
+                    (<strong>MVC</strong>) pattern. The core components are:
+                </p>
+                <ul class="list-disc list-inside ml-2 sm:ml-4">
+                    <li>
+                        <code>model-viewer.html</code> — The <strong>view</strong> component,
+                        responsible for the UI. It sets up the canvas element in which the 3D model
+                        itself will be rendered, all of the buttons and controls needed, and a
+                        cointainer element in which some extra content (text, videos, and pictures)
+                        will be loaded, depending on the model chosen. All of these elements by
+                        themselves are 'dumb', their actual functionality or content is injected by
+                        the <strong>controller</strong> at runtime.
+                    </li>
+                    <li>
+                        <code>src/model-viewer.ts</code> — The
+                        <strong>controller</strong> component, responsible of linking the view to
+                        the models, serving as the logic layer. When loaded, it fetches all of the
+                        needed UI elements and adds listeners to actually make them functional.
+                        Additionally, it handles loading and switching between models, injecting the
+                        relevant content (based on the model chosen) into the page.
+                    </li>
+                    <li>
+                        <code>src/models.ts</code> and <code>src/scene.ts</code> — The
+                        <strong>models</strong> component. <code>models.ts</code> defines data about
+                        the models available, while <code>scene.ts</code> defines a class that
+                        encapsulate the entire 3D scene, treating it as a single entity which holds
+                        all the needed components (such as the renderer, camera, model, etc). This
+                        is especially useful as it allows the controller
+                        (<code>src/model-viewer.ts</code>) to be leaner, focusing on just 'syncing'
+                        the UI with the state of the application.
+                    </li>
+                </ul>
+                <p class="mt-1">
+                    As mentioned, besides the 3D model itself, additional content is loaded into the
+                    page according to the model chosen. This content content is kept in the
+                    <code>public/info</code> folder, in the form of
+                    <strong>HTML</strong> 'fragments' (such as
+                    <code>public/info/aeropress.html</code>), which is simply fetched and injected
+                    into the page at runtime.
+                    <br />
+                    The content itself is just in order to add a bit more 'personality' to each
+                    page, adding some details about the object shown (such as its history and fun
+                    facts), in the form of text, images, and videos.
+                </p>
             </section>
 
             <!-- Interaction -->
-            <section id="interaction" class="boxed shadow-md flex flex-col gap-4 sm:gap-6">
+            <section id="interaction" class="boxed shadow-md">
                 <h2 class="mb-2 sm:mb-4">Interaction</h2>
-                <p>TODO</p>
+                <p>
+                    The user can select an object either from the carousel in the
+                    <strong>index</strong> page, or directly from a dropdown in the
+                    <strong>models</strong> page. This allows the user to inspect the 3D model of
+                    the selected object in the canvas element discussed earlier. The user can
+                    interact with the canvas itself to rotate, pan, and zoom the camera (the default
+                    behaviour provided by <code>OrbitControls</code>). Additionally, the user can:
+                </p>
+                <ul class="list-disc list-inside ml-2 sm:ml-4">
+                    <li>Toggle the wireframe view on and off.</li>
+                    <li>
+                        Change the background environment of the scene, choosing from a list of
+                        available ones.
+                    </li>
+                    <li>Adjust the camera FOV.</li>
+                    <li>
+                        Adjust the color and intensity of a spotlight present in the scene (to play
+                        with with the shadows and overall mood of the scene).
+                    </li>
+                    <li>Trigger the object's animation.</li>
+                    <li>
+                        Reset the scene state to the defaults (this resets everything listed above,
+                        including the camera's position, excepts for the model loaded, its animation
+                        state, and the environment loaded).
+                    </li>
+                </ul>
+                <p>
+                    Most of these controls are accessible inside a menu in the 3D canvas, by
+                    clicking the hamburger menu at the top-right of it.
+                    <br />
+                    The only exception is the animation, which is triggered by a button on the
+                    bottom-left of the 3D canvas, since it is not really a 'scene' setting, but
+                    rather a property of the model itself. This button is labelled
+                    <strong>Disassemble</strong> when the model is in its default, assembled state,
+                    and <strong>Re-assemble</strong> when the model is disassembled, allowing to
+                    play the animation in both directions, depending on the state of the model.
+                </p>
+            </section>
 
-                <h3 class="text-accent">Testing Strategy</h3>
-                <table id="test-checklist">
+            <!-- Implementation -->
+            <section id="implementation" class="boxed shadow-md">
+                <h2 class="mb-2 sm:mb-4">Implementation</h2>
+                <p>
+                    I tried to keep the tecnologies/packages used to a minimum. I wanted to avoid
+                    relying on <strong>CDN</strong>s, and instead opted to use
+                    <strong>npm</strong> and <strong>Vite</strong> so that I could better manage
+                    dependencies and bundle only what I needed in my production builds, resulting in
+                    better performance and a lighter application overall.
+                </p>
+                <p class="mt-1">
+                    I considered using
+                    <a href="https://svelte.dev/" target="_blank" rel="noopener noreferrer">
+                        `Svelte`</a
+                    >
+                    for ease of development, but I decided to keep it simple and go framework-less,
+                    since the project itself is fairly small. This kept the project very simple,
+                    consisting of only a handful of <strong>HTML</strong> and
+                    <strong>TypeScript</strong> files (besides the assets). On the downside, it
+                    resulted in more work, having to manually fetch elements and set up event
+                    listeners, and some repetition in the codebase (such as the navigation bar being
+                    repeated across all <strong>HTML</strong> files). While annoying, the repetition
+                    is not a big issue considering the small size of the project. If the project was
+                    to ever grow in complexity, I would definitely switch over to
+                    <strong>Svelte</strong> or the likes.
+                </p>
+                <h3 class="mt-4 sm:mt-6 mb-2 text-accent">Testing Strategy</h3>
+                <p>
+                    Similarly, my testing strategy was also very simple: all of the testing was
+                    performed manually as features were implemented. This is because, again, the
+                    website is quite simple, with a small number of features, most of which are
+                    visual anyway, meaning automated testing would have likely only accounted for a
+                    very small portion of the functionality.
+                </p>
+                <p class="mt-1">
+                    As part of the final testing, before submission, I had the following checklist,
+                    covering most of the application's features:
+                </p>
+                <table id="test-checklist" class="mt-2 sm:mt-4">
                     <thead>
                         <tr class="header-row">
                             <th class="h3">Test</th>
@@ -384,7 +655,18 @@
                 class="border-2 border-primary p-6 shadow-accent-md"
             >
                 <h2 class="mb-2 sm:mb-4">Implementation & Publication</h2>
-                <p>TODO</p>
+                <p>
+                    I added this page (<strong>about.html</strong>) to provide insight into the
+                    application and 3D models development, covering all points as best as I could.
+                </p>
+                <h3 class="mt-4 sm:mt-6 mb-2 text-accent">Submission</h3>
+                <p>
+                    <strong>GitHub</strong> was used for version control during development. As part
+                    of my submission, I have downloaded the repository as a ZIP file, testing that
+                    it could be opened and run without any issues. As part of the codebase, in the
+                    root, there is a <code>README.md</code> file, which includes instructions on how
+                    to run the application.
+                </p>
             </section>
         </main>
     </body>

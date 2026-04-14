@@ -23,7 +23,7 @@
 
 body {
     font-family: var(--font-body);
-    @apply bg-base text-primary max-w-400 mx-auto px-1 sm:px-2;
+    @apply bg-base max-w-400 mx-auto px-1 sm:px-2 text-primary/80 leading-relaxed;
 }
 
 header {
@@ -45,20 +45,16 @@ nav {
 }
 
 h1 {
-    @apply font-display text-3xl font-bold;
+    @apply font-display text-3xl font-bold text-primary;
 }
 
 h2 {
-    @apply font-display text-2xl font-bold;
+    @apply font-display text-2xl font-bold text-primary;
 }
 
 h3,
 .h3 {
     @apply text-sm font-mono uppercase tracking-widest font-bold pt-1;
-}
-
-p {
-    @apply text-primary/80 leading-relaxed;
 }
 
 strong {
@@ -115,7 +111,7 @@ code {
 }
 
 #test-checklist {
-    @apply border-collapse border-2 border-primary text-sm;
+    @apply border-collapse border-2 border-primary text-sm w-full;
 
     tr {
         @apply border-b border-primary/20;
