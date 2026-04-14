@@ -8,30 +8,27 @@
         <link rel="stylesheet" href="/src/style.css" />
         <title>Drip - Models</title>
     </head>
-    <body class="bg-base text-primary max-w-400 mx-auto sm:px-4">
-        <header
-            class="fixed top-0 left-0 right-0 z-100 h-16 px-2 sm:px-4 pt-4 mx-auto max-w-400 flex flex-col gap-2 bg-base"
-        >
-            <nav class="flex items-baseline justify-between px-4 gap-6">
+    <body>
+        <header>
+            <nav>
                 <a href="index.html" id="banner"> Drip. </a>
 
                 <!-- spaces out banner from rest of the navigation links -->
                 <div class="grow"></div>
 
-                <a href="index.html" class="link"> Home </a>
-                <a href="model-viewer.html" class="link active"> Models </a>
-                <a href="about.html" class="link"> About </a>
+                <a href="index.html" class="link h3"> Home </a>
+                <a href="model-viewer.html" class="link active h3"> Models </a>
+                <a href="about.html" class="link h3"> About </a>
             </nav>
             <div class="h-0 border-2 border-t-primary border-b-accent"></div>
         </header>
 
-        <!-- spacer for the header, pushing main down -->
-        <div class="h-16 opacity-0"></div>
+        <main>
+            <h1 id="model-info-title" class="text-center p-2 border-2 border-primary shadow-md">
+                Loading...
+            </h1>
 
-        <main class="flex flex-col gap-6 sm:gap-8 px-4 sm:px-6 py-6 sm:py-8 mb-8">
-            <section
-                class="relative flex overflow-hidden shadow-accent-lg border-2 border-primary mx-2 sm:mx-4"
-            >
+            <section class="relative flex overflow-hidden shadow-accent-md border-2 border-primary">
                 <canvas id="model-viewer-canvas" class="w-full h-[70vh] min-h-70 block"></canvas>
 
                 <!-- model selector -->
@@ -132,7 +129,7 @@
                     <div
                         class="flex items-center justify-between px-4 py-3 border-b-2 border-primary"
                     >
-                        <h2 class="font-bold text-lg">Controls</h2>
+                        <h3>Controls</h3>
                         <button id="btn-controls-close" class="btn-neutral btn-square">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -264,12 +261,6 @@
                     </div>
                 </div>
             </section>
-
-            <div id="model-info-header" class="p-4 bg-base border-2 border-primary shadow-lg">
-                <h2 id="model-info-title" class="font-display text-4xl font-bold text-center">
-                    Loading...
-                </h2>
-            </div>
 
             <!-- model info panel -->
             <section id="model-info-section">

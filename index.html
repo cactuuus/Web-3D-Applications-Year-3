@@ -8,30 +8,25 @@
         <link rel="stylesheet" href="/src/style.css" />
         <title>Drip - Home</title>
     </head>
-    <body class="bg-base text-primary max-w-400 mx-auto sm:px-4">
-        <header
-            class="fixed top-0 left-0 right-0 z-100 h-16 px-2 sm:px-4 pt-4 mx-auto max-w-400 flex flex-col gap-2 bg-base"
-        >
-            <nav class="flex items-baseline justify-between px-4 gap-6">
+    <body>
+        <header>
+            <nav>
                 <a href="index.html" id="banner"> Drip. </a>
 
                 <!-- spaces out banner from rest of the navigation links -->
                 <div class="grow"></div>
 
-                <a href="index.html" class="link active"> Home </a>
-                <a href="model-viewer.html" class="link"> Models </a>
-                <a href="about.html" class="link"> About </a>
+                <a href="index.html" class="link active h3"> Home </a>
+                <a href="model-viewer.html" class="link h3"> Models </a>
+                <a href="about.html" class="link h3"> About </a>
             </nav>
             <div class="h-0 border-2 border-t-primary border-b-accent"></div>
         </header>
 
-        <!-- spacer for the header, pushing main down -->
-        <div class="h-16 opacity-0"></div>
-
-        <main class="flex flex-col gap-6 sm:gap-8 px-4 sm:px-6 py-6 sm:py-8 mb-8">
+        <main>
             <!-- short paragraph as intro to the website -->
             <section id="intro">
-                <h1 class="font-display text-4xl font-bold mb-6 text-center">
+                <h1 class="mb-2 sm:mb-4 text-center">
                     Brewing,
                     <span class="text-accent">up close.</span>
                 </h1>
@@ -122,12 +117,10 @@
                 </div>
                 <div class="p-8 flex flex-col justify-between items-start border-primary">
                     <div>
-                        <p
-                            class="text-sm font-mono uppercase tracking-widest font-bold text-accent mb-2 model-preview-id"
-                        >
+                        <h3 class="text-accent model-preview-id">
                             <!-- MODEL NUMBER + MODEL ID -->
-                        </p>
-                        <h2 class="font-display text-3xl font-bold mb-4 model-preview-name">
+                        </h3>
+                        <h2 class="mb-2 sm:mb-4 model-preview-name">
                             <!-- MODEL NAME -->
                         </h2>
                         <p class="max-w-[90%] model-preview-description mb-4">

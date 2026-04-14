@@ -7,26 +7,385 @@
         <link rel="stylesheet" href="/src/style.css" />
         <title>Drip - About</title>
     </head>
-    <body class="bg-base text-primary max-w-400 mx-auto sm:px-4">
-        <header
-            class="fixed top-0 left-0 right-0 z-100 h-16 px-2 sm:px-4 pt-4 mx-auto max-w-400 flex flex-col gap-2 bg-base"
-        >
-            <nav class="flex items-baseline justify-between px-4 gap-6">
+    <body>
+        <header>
+            <nav>
                 <a href="index.html" id="banner"> Drip. </a>
 
                 <!-- spaces out banner from rest of the navigation links -->
                 <div class="grow"></div>
 
-                <a href="index.html" class="link"> Home </a>
-                <a href="model-viewer.html" class="link"> Models </a>
-                <a href="about.html" class="link active"> About </a>
+                <a href="index.html" class="link h3"> Home </a>
+                <a href="model-viewer.html" class="link h3"> Models </a>
+                <a href="about.html" class="link active h3"> About </a>
             </nav>
             <div class="h-0 border-2 border-t-primary border-b-accent"></div>
         </header>
 
-        <!-- spacer for the header, pushing main down -->
-        <div class="h-16 opacity-0"></div>
+        <main class="">
+            <!-- About -->
+            <section id="about">
+                <h1 class="mb-4 sm:mb-6 text-center">
+                    About
+                    <span class="text-accent">Drip.</span>
+                </h1>
+                <p>TODO</p>
+            </section>
 
-        <main class="flex flex-col gap-6 sm:gap-12 px-4 sm:px-6 py-6 sm:py-12">ABOUT PAGE</main>
+            <!-- 3D Models -->
+            <section id="models" class="boxed shadow-md flex flex-col gap-4 sm:gap-6">
+                <!-- Overview -->
+                <div>
+                    <h2 class="mb-2 sm:mb-4">3D Models</h2>
+                    <p>TODO</p>
+                </div>
+
+                <!-- Moka -->
+                <div>
+                    <h3 class="mb-2 text-accent">Moka Pot</h3>
+                    <p>TODO</p>
+                </div>
+
+                <!-- Chemex -->
+                <div>
+                    <h3 class="mb-2 text-accent">Chemex</h3>
+                    <p>TODO</p>
+                </div>
+
+                <!-- AeroPress -->
+                <div>
+                    <h3 class="mb-2 text-accent">AeroPress</h3>
+                    <p>TODO</p>
+                </div>
+            </section>
+
+            <!-- Design -->
+            <section id="design" class="boxed shadow-md flex flex-col gap-4 sm:gap-6">
+                <h2 class="mb-2 sm:mb-4">Design</h2>
+                <p>TODO</p>
+            </section>
+
+            <!-- Integration -->
+            <section id="integration" class="boxed shadow-md flex flex-col gap-4 sm:gap-6">
+                <h2 class="mb-2 sm:mb-4">Integration</h2>
+                <p>TODO</p>
+            </section>
+
+            <!-- Interaction -->
+            <section id="interaction" class="boxed shadow-md flex flex-col gap-4 sm:gap-6">
+                <h2 class="mb-2 sm:mb-4">Interaction</h2>
+                <p>TODO</p>
+
+                <h3 class="text-accent">Testing Strategy</h3>
+                <table id="test-checklist">
+                    <thead>
+                        <tr class="header-row">
+                            <th class="h3">Test</th>
+                            <th class="h3 w-16 md:w-32">Pass</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Home page -->
+                        <tr class="sub-header-row">
+                            <td colspan="2">
+                                <span class="h3">Home</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Navigation bar links redirect to correct page, including the logo.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Each carousel item redirects to the corresponding model's page.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Clicking <code>left</code> transitions to the previous model,
+                                wrapping at the start.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Clicking <code>right</code> transitions to the next model, wrapping
+                                at the end.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>On mobile, carousel images are hidden.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>On desktop, carousel images are displayed.</td>
+                            <td>-</td>
+                        </tr>
+
+                        <!-- Models page (general) -->
+                        <tr>
+                            <td class="sub-header-row" colspan="2">
+                                <span class="h3">Models (general)</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Navigation bar links redirect to correct page, including the logo.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                URL attribute <code>?model=aeropress</code> correcly loads the page
+                                with the AeroPress model selected.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                URL attribute <code>?model=chemex</code> correcly loads the page
+                                with the Chemex model selected.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                URL attribute <code>?model=moka</code> correcly loads the page with
+                                the Moka model selected.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Invalid model ID (<code>?model=test</code>) falls back to the first
+                                model.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Missing model attribute in the URL loads the first model by default.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                3D canvas viewport resizes correctly with the screen (instead of
+                                stretching).
+                            </td>
+                            <td>-</td>
+                        </tr>
+
+                        <!-- Scene controls -->
+                        <tr>
+                            <td class="sub-header-row" colspan="2">
+                                <span class="h3 text-accent">Scene Controls</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><code>Menu</code> button opens the controls panel.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Close</code> button closes the controls panel.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>Wireframe</code> checkbox correctly toggles wireframe mode on
+                                and off.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Selecting a new <code>environment</code> from the dropdown correctly
+                                updates the scene.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Every single <code>environment</code> loads when selected (no
+                                missing assets).
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>Background blur</code> slider blurs the environment
+                                accordingly.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Camera FOV</code> slider updates the camera accordingly.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>Light intensity</code> slider updates the scene's spotlight
+                                accordingly.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>Light color</code> picker updates the scene's spotlight color
+                                accordingly.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>Reset scene</code> button restores all defaults (wireframe,
+                                blur, FOV, camera position, spotlight).
+                            </td>
+                            <td>-</td>
+                        </tr>
+
+                        <!-- AeroPress -->
+                        <tr>
+                            <td class="sub-header-row" colspan="2">
+                                <span class="h3 text-accent">AeroPress</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Model loads correctly when selected.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Page content loads correctly when selected.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Disassemble</code> animation plays correctly.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Assemble</code> animation plays correctly.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                On mobile, WAC (World Aeropress Championship) video displays below
+                                the text.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>On desktop, WAC video displays to the right of the text.</td>
+                            <td>-</td>
+                        </tr>
+
+                        <!-- Chemex -->
+                        <tr>
+                            <td class="sub-header-row" colspan="2">
+                                <span class="h3 text-accent">Chemex</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Model loads correctly when selected.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Page content loads correctly when selected.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Disassemble</code> animation plays correctly.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Assemble</code> animation plays correctly.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>On mobile, the 'Chemex appearances' gallery stacks vertically.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                On desktop, the 'Chemex appearances' gallery stacks horizontally.
+                            </td>
+                            <td>-</td>
+                        </tr>
+
+                        <!-- Moka -->
+                        <tr>
+                            <td class="sub-header-row" colspan="2">
+                                <span class="h3">Moka</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Model loads correctly when selected.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Page content loads correctly when selected.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Disassemble</code> animation plays correctly.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>Assemble</code> animation plays correctly.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>On mobile, the Moka x-ray video displays below the text.</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                On desktop, the Moka x-ray video displays to the right of the text.
+                            </td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Deeper Understanding -->
+            <section id="deeper-understanding" class="border-2 border-primary p-6 shadow-md">
+                <h2 class="mb-2 sm:mb-4">Deeper Understanding</h2>
+                <div class="flex flex-col gap-4 sm:gap-6">
+                    <div>
+                        <h3 class="text-accent">01</h3>
+                        <p>TODO</p>
+                    </div>
+                    <div>
+                        <h3 class="text-accent">02</h3>
+                        <p>TODO</p>
+                    </div>
+                    <div>
+                        <h3 class="text-accent">03</h3>
+                        <p>TODO</p>
+                    </div>
+                    <div>
+                        <h3 class="text-accent">04</h3>
+                        <p>TODO</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Implementation & Publication -->
+            <section
+                id="implementation-publication"
+                class="border-2 border-primary p-6 shadow-accent-md"
+            >
+                <h2 class="mb-2 sm:mb-4">Implementation & Publication</h2>
+                <p>TODO</p>
+            </section>
+        </main>
     </body>
 </html>

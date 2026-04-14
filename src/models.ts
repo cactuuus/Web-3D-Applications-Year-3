@@ -31,9 +31,9 @@ export const models: Model[] = [
     {
         id: 'aeropress',
         number: 1,
-        name: 'The Aeropress',
+        name: 'The AeroPress',
         description:
-            "Born in 2005 from Alan Adler's obsession with coffee, the Aeropress is incredibly simple in concept and execution. Despite this, this little brewer is renowned for its flexibility and wide range of brewing techniques.",
+            "Born in 2005 from Alan Adler's obsession with coffee, the AeroPress is incredibly simple in concept and execution. Despite this, this little brewer is renowned for its flexibility and wide range of brewing techniques.",
         path: `${MODELS_PATH_PREFIX}aeropress.glb`,
         preview: `${PREVIEWS_PATH_PREFIX}aeropress.webp`,
         content: `${INFO_PATH_PREFIX}aeropress.html`,
