@@ -11,6 +11,7 @@ export default defineConfig({
                 about: './about.html',
                 viewer: './model-viewer.html',
             },
+            external: ['./blender'],
         },
     },
 });
