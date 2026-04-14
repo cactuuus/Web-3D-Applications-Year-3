@@ -36,6 +36,12 @@ main {
 
 nav {
     @apply flex items-baseline justify-between px-2 sm:px-4 gap-4 pb-2;
+    .nav-link {
+        @apply text-primary hover:bg-accent hover:text-base px-2 transition-all font-bold;
+        &.active {
+            @apply text-accent hover:text-base;
+        }
+    }
 }
 
 h1 {
@@ -51,8 +57,12 @@ h3,
     @apply text-sm font-mono uppercase tracking-widest font-bold pt-1;
 }
 
+p {
+    @apply text-primary/80 leading-relaxed;
+}
+
 strong {
-    @apply bg-primary/10 text-accent font-bold p-1;
+    @apply text-accent font-bold;
 }
 
 code {
@@ -63,11 +73,8 @@ code {
     @apply text-4xl font-bold font-display text-primary drop-shadow-title hover:text-primary/80 transition-colors tracking-wide;
 }
 
-.link {
-    @apply text-primary hover:bg-accent hover:text-base px-2 transition-all font-bold;
-    &.active {
-        @apply text-accent hover:text-base;
-    }
+.secondary-link {
+    @apply text-accent underline hover:text-accent-light transition-colors;
 }
 
 .btn-primary {
@@ -89,6 +96,22 @@ code {
 
 .boxed {
     @apply border-2 border-primary p-2 sm:p-4;
+}
+
+.tip-box {
+    @apply p-2 sm:p-4 bg-accent/5 border-2 border-l-6 border-accent;
+
+    h3 {
+        @apply mb-1 text-primary/80;
+    }
+
+    p {
+        @apply text-sm;
+    }
+
+    a {
+        @apply mt-3 flex items-center gap-2 uppercase text-xs font-bold underline text-accent hover:text-accent-light transition-colors;
+    }
 }
 
 #test-checklist {
