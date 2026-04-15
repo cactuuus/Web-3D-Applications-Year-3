@@ -36,7 +36,7 @@ npm run preview
 1. In the terminal, navigate to the root of the project.
 2. Run `npm install` to install the dependencies.
 3. Run `npm run dev` to start the development server.
-4. Open the URL provided in the terminal (usually `http://localhost:5173/`) in your browser to access the application.
+4. Open the URL provided in the terminal (usually `http://localhost:5173/~jc2046/`) in your browser to access the application.
 
 ## Project Structure
 
