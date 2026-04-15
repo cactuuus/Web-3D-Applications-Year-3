@@ -35,8 +35,9 @@
                     <strong>Web 3D Applications</strong> module.
                 </p>
                 <p class="mt-1">
-                    I followed a coffee theme, modelling a few brewing devices (a Moka pot, a
-                    Chemex, and an AeroPress). Each of these items is showcased in the website,
+                    I followed a coffee theme, modelling a few brewing devices (a
+                    <strong>Moka pot</strong>, a <strong>Chemex</strong>, and an
+                    <strong>AeroPress</strong>). Each of these items is showcased in the website,
                     along with a few interesting facts about them.
                 </p>
             </section>
@@ -47,27 +48,25 @@
                 <div>
                     <h2 class="mb-2 sm:mb-4">3D Models</h2>
                     <p>
-                        All 3D models were built from scratch in <strong>Blender</strong> and then
+                        All 3D models were built from scratch in <strong>Blender</strong>, and then
                         exported as <code>.glb</code> files. Various materials were used across
                         models, some taken from
-                        <a href="https://www.poliigon.com/" target="_blank" class="secondary-link"
-                            >Poliigon</a
-                        >
-                        and
                         <a href="https://www.blenderkit.com/" target="_blank" class="secondary-link"
                             >BlenderKit</a
-                        >, and some simple ones created by me.
+                        >
+                        and some (simpler ones) which I created myself.
                     </p>
                     <p class="mt-1">
                         All models have a fairly high polygon count. They could be greatly optimized
-                        by reducing the geometry (via a <code>decimate</code> modifier, for
-                        example), but for this project I wanted them to feel as detailed and
-                        polished as possible, even at the cost of performance, especially
-                        considering that this website only ever render one model at the time.
+                        by reducing the geometry (via a <code>decimate</code> modifier, for example,
+                        which I did use on the Moka model), but for this project I wanted them to
+                        feel as detailed and polished as possible, even at the cost of performance,
+                        especially considering that this website only ever render one model at the
+                        time.
                     </p>
                     <p class="mt-1">
-                        For consistency, I added a single animation to each model which operates the
-                        same way in all of them: it 'disassembles' the item into its components (and
+                        For consistency, each model has a single animation which operates the same
+                        way in all of them: it 'disassembles' the item into its components (and
                         're-assembles' it when played in reverse). They all use keyframes for
                         translating and rotating these components, without the need for more complex
                         approaches (like setting up <code>armatures</code>).
@@ -81,28 +80,56 @@
                 <!-- Moka -->
                 <div>
                     <h3 class="mb-2 text-accent">Moka</h3>
-                    <p>
-                        The Moka pot was the first object I modelled, and by far the one I spent the
-                        most time on.
-                    </p>
-                    <p class="mt-1">
-                        The body of the model is made of a mix of sharp edges/corners and smooth
-                        joins. For this, I used <code>auto-smooth</code>, setting
-                        <code>sharp</code> edges when needed, which gives the desired industrial,
-                        'unpolished' effect.
-                        <br />
-                        The handle, top knob, and the filters required much more detail, so they
-                        were given a <code>subsurface</code> modifier. I believe this, along with
-                        the materials used, is the main reason why the resulting
-                        <code>glb</code> file is so large.
-                    </p>
-                    <p class="mt-1">
-                        Because of my lack of experience, I ended up doing a lot of manual work
-                        connecting vertices and reshaping faces, which, with insight, could've been
-                        done much faster and with better results by using the correct modifiers and
-                        other tools (such as <code>creases</code> instead of
-                        <code>sharp</code> edges).
-                    </p>
+                    <div
+                        class="flex flex-col items-center xl:flex-row xl:items-start gap-2 sm:gap-4 lg:gap-6"
+                    >
+                        <div>
+                            <p>
+                                The Moka pot was the first object I modelled, and by far the one I
+                                spent the most time on.
+                            </p>
+                            <p class="mt-1">
+                                The body of the model is made of a mix of sharp edges/corners and
+                                smooth joins. For this, I used <code>auto-smooth</code>, setting
+                                <code>sharp</code> edges when needed, which gives the desired
+                                industrial, 'unpolished' effect.
+                            </p>
+                            <p class="mt-1">
+                                The handle, top knob, and the filters required much more detail, so
+                                they were given a <code>subsurface</code> modifier. This resulted in
+                                a very high polygon count, exporting to a very large
+                                <code>glb</code> file. I did reduce it by applying a
+                                <code>decimate</code> modifier to them afterwards, which
+                                unfortunately also ruined the geometry of the object, which is now
+                                extremely messy, made of what seem to be random polygons. The before
+                                and after is shown in <a href="#figure-1">figure 1</a>: the result
+                                is messier, but the vertex count was reduced from
+                                <code>46887</code> to <code>25212</code>, a still high amount by all
+                                means, but also a significant reduction.
+                            </p>
+                            <p class="mt-1">
+                                Because of my lack of experience, I also ended up doing a lot of
+                                manual work connecting vertices and reshaping faces, which, with
+                                insight, could've been done much faster and with better results by
+                                using the correct modifiers and other tools (such as using
+                                <code>creases</code> instead of marking <code>sharp</code> edges).
+                            </p>
+                        </div>
+
+                        <figure
+                            id="figure-1"
+                            class="relative border-primary border-2 lg:min-w-lg xl:min-w-xl w-full max-w-lg"
+                        >
+                            <img
+                                src="assets/media/moka-handle-decimate.avif"
+                                alt="moka handle before and after decimation"
+                                class="w-full object-cover"
+                            />
+                            <figcaption class="absolute bottom-0 left-0 right-0 caption">
+                                fig 1: Moka handle before (left) and after (right) decimation
+                            </figcaption>
+                        </figure>
+                    </div>
                 </div>
 
                 <!-- Chemex -->
@@ -111,45 +138,74 @@
                     <p>The Chemex was the second object I designed, likely the simplest overall.</p>
                     <p class="mt-1">
                         This model is made of mostly smooth surfaces, so all of the components
-                        (besides the rope) were given a `subsurface` modifier. The few 'sharper'
-                        edges were hadnled by simply adding more <code>edge loops</code> and
-                        adjusting the edges' <code>crease</code> value.
+                        (besides the rope) were given a <code>subsurface</code> modifier. The few
+                        'sharper' edges were handled by simply adding more
+                        <code>edge loops</code> or adjusting their <code>crease</code> value.
                     </p>
-                    <p class="mt-1">
-                        One of the main challenges I had with this model was creasting the
-                        glass-like material. I initialy tried to use some pre-built materials from
-                        <strong>BlenderKit</strong>, but none of them exported well to
-                        <code>glb</code>, so I ended up creating a custom one, which required a lot
-                        of trial and error to look right. The second main challenge was animating
-                        the rope, for which I tried many different ideas:
-                    </p>
+                    <div
+                        class="flex flex-col items-center xl:flex-row xl:items-start gap-2 sm:gap-4 lg:gap-6"
+                    >
+                        <div>
+                            <p>
+                                One of the main challenges I had with this model was creating the
+                                glass-like material. I initialy tried to use some pre-built
+                                materials from
+                                <strong>BlenderKit</strong>, but none of them exported well to
+                                <code>glb</code>, resulting in either weird artifacts, or not
+                                showing at all (as shown in <a href="#figure-2">figure 2</a>). I
+                                ended up creating a custom one, which required a lot of trial and
+                                error to look right.
+                                <br />
+                                The second main challenge was animating the rope, for which I tried
+                                many different ideas:
+                            </p>
 
-                    <ul class="list-disc list-inside ml-2 sm:ml-4">
-                        <li><code>geometry nodes</code> to fade it out layer by layer.</li>
-                        <li>
-                            turning it into a <code>curve</code> and keyframing the
-                            <code>bevel level</code> to 'fade it out' from one end to the other.
-                        </li>
-                        <li>
-                            using <code>soft-body</code> and <code>cloth</code> modifiers to
-                            simulate 'untying' the lace and remove it from the Chemex.
-                        </li>
-                        <li>
-                            just fading it out by keyframing the material's
-                            <code>alpha</code> value.
-                        </li>
-                    </ul>
-                    <p>
-                        All of them worked (to various degrees) in <strong>Blender</strong>, but
-                        none exported to <code>glb</code>. I was stuck on this for an entire day,
-                        until I eventually decided to instead animate the rope by simply
-                        'stretching' it. I have done so by keyframing two <code>state keys</code>:
-                        the base state, and the a 'stretched' version, which accounts fot the other
-                        components' positions at the end of their animation. To do this, I simply
-                        manually streched the mesh using <code>proportional editing</code> to ensure
-                        the shape stays consistent as I move and stretch it around. The overall
-                        result is far from what I hoped to achieve, but it's good all considered!
-                    </p>
+                            <ul class="list-disc list-inside ml-2 sm:ml-4">
+                                <li><code>geometry nodes</code> to fade it out layer by layer.</li>
+                                <li>
+                                    turning it into a <code>curve</code> and keyframing its
+                                    <code>bevel level</code> to 'fade it out' from one end to the
+                                    other.
+                                </li>
+                                <li>
+                                    using <code>soft-body</code> and <code>cloth</code> modifiers to
+                                    simulate 'untying' the lace and remove it from the Chemex.
+                                </li>
+                                <li>
+                                    just fading it out by keyframing the material's
+                                    <code>alpha</code> value.
+                                </li>
+                            </ul>
+                            <p>
+                                All of them worked (to various degrees) in <strong>Blender</strong>,
+                                but none exported to <code>glb</code>. I was stuck on this for an
+                                entire day, until I eventually decided to instead animate the rope
+                                by simply 'stretching' it.
+                                <br />
+                                I have done so by keyframing two <code>state keys</code>: the base
+                                state, and the a 'stretched' version, which accounts for the other
+                                components' positions at the end of their animation. To do this, I
+                                simply manually stretched the mesh using
+                                <code>proportional editing</code> to ensure the shape stays
+                                consistent as I move and stretch it around. The overall result is
+                                far from what I hoped to achieve, but it's good all considered!
+                            </p>
+                        </div>
+
+                        <figure
+                            id="figure-2"
+                            class="relative border-primary border-2 lg:min-w-lg xl:min-w-xl w-full max-w-lg"
+                        >
+                            <img
+                                src="assets/media/chemex-problematic-glass-material.avif"
+                                alt="chemex problematic glass material"
+                                class="w-full object-cover"
+                            />
+                            <figcaption class="absolute bottom-0 left-0 right-0 caption">
+                                fig 2: Glass material as in glb (left) vs in Blender (right)
+                            </figcaption>
+                        </figure>
+                    </div>
                 </div>
 
                 <!-- AeroPress -->
@@ -165,22 +221,22 @@
                         <code>alpha</code> (transparency) and <code>transmission</code>.
                     </p>
                     <p class="mt-1">
-                        For the label, I added some text to the model, using a font that best
-                        matched the original. I then coverted the text to a mesh, then applied a
-                        <code>decimate</code> modifier to it, which greatly reduced its geometry.
-                        Lastly, I used a <code>shrinkwrap</code> modifier to 'wrap' it around the
-                        tube. The original idea was to then apply a <code>boolean</code> modifier to
-                        'engrave' the text into the plastic, but I eventually decided against it, as
-                        I preferred the current look more.
+                        For the label, I added text to the model, using a font that best matched the
+                        original, and I then converted it to a mesh, applying a
+                        <code>decimate</code> modifier to it to greatly reduce its geometry. Lastly,
+                        I used a <code>shrinkwrap</code> modifier to 'wrap' it around the tube. The
+                        original idea was to then apply a <code>boolean</code> modifier to 'engrave'
+                        the text into the plastic, but I eventually decided against it, as I
+                        preferred the current look more.
                     </p>
                     <p class="mt-1">
-                        Lastly, for the 'cap/basket' component was a little complex, I made a series
-                        of cylinders and used a
-                        <code>boolean</code> modifier to use them to 'cut' the holes into it, which
-                        overall looked good, considering I was going for a more 'industrial' look
-                        (essentially sharper edges). The pattern on the side was a bit more
-                        difficult and manual, basically extruding and deleting extra-faces to get to
-                        the desired look.
+                        Lastly, for the 'cap/basket' component, I created its holes by making a
+                        cylinder the size of a single hole, then used a couple of
+                        <code>array</code> modifiers and a <code>boolean</code> modifier to 'cut' a
+                        series of holes into it, matching the real-life pattern.
+                        <br />
+                        The pattern on the side, however, was a more difficult and manual process,
+                        basically extruding and deleting extra-faces to get to the desired look.
                     </p>
                     <p class="mt-1">
                         Animations follow the same pattern as the rest, basically taking the
@@ -196,25 +252,24 @@
             <section id="design" class="boxed shadow-md">
                 <h2 class="mb-2 sm:mb-4">Design</h2>
                 <p>
-                    The website sytyle is fairly simple: sharp borders, shadows, boxy components,
-                    and a warm color pallette consisting of shades of brown, orange, and black for
-                    good contrast and readability. This was done using a mix of
+                    The website style is fairly simple: sharp borders, corners and shadows, boxy
+                    sections , and a warm color scheme consisting of shades of brown, orange, and
+                    black used for good contrast and readability. This was done using a mix of
                     <strong>Tailwind</strong> and custom <strong>CSS</strong>.
                 </p>
                 <p class="mt-1">
                     I wanted to keep the layout simple as well: all pages have a consistent header
-                    (used for navigation), and uses boxes to organize various content. The layout is
-                    fully responsive and adapts to different screen sizes. Elements shrink and grow
-                    with the screen, switching between row and column layout when needed, and some
-                    non-essential content (such as the carousel images in the index page) is hidden
-                    on smaller screens to avoid clutter.
+                    (used for navigation), and uses boxes to organize various content. Elements
+                    shrink and grow with the screen, switching between row and column layout when
+                    needed, and some non-essential content (such as the carousel images in the index
+                    page) is hidden on smaller screens to avoid clutter.
                 </p>
                 <p class="mt-1">
                     Semantic <strong>HTML</strong> elements are used throughout the website, and
-                    <code>alt</code> attributes were used for all images, which help accessibility.
-                    Screen readers support however, was not a priority: considering the main focus
-                    of this website is the 3D models, there would be no way to make it fully
-                    accessible to visually impaired users regardless.
+                    <code>alt</code> attributes were used for all images, for accessibility. Screen
+                    readers support however, was not a priority: considering the main focus of this
+                    website is the 3D models, there would be no way to make it fully accessible to
+                    visually impaired users regardless, so I didn't focus too much on it.
                 </p>
             </section>
 
@@ -256,7 +311,7 @@
                 </ul>
                 <p class="mt-1">
                     As mentioned, besides the 3D model itself, additional content is loaded into the
-                    page according to the model chosen. This content content is kept in the
+                    page according to the model chosen. This content is kept in the
                     <code>public/info</code> folder, in the form of
                     <strong>HTML</strong> 'fragments' (such as
                     <code>public/info/aeropress.html</code>), which is simply fetched and injected
@@ -323,7 +378,7 @@
                 <p class="mt-1">
                     I considered using
                     <a href="https://svelte.dev/" target="_blank" rel="noopener noreferrer">
-                        `Svelte`</a
+                        Svelte</a
                     >
                     for ease of development, but I decided to keep it simple and go framework-less,
                     since the project itself is fairly small. This kept the project very simple,
@@ -411,21 +466,21 @@
                         </tr>
                         <tr>
                             <td>
-                                URL attribute <code>?model=aeropress</code> correcly loads the page
+                                URL attribute <code>?model=aeropress</code> correctly loads the page
                                 with the AeroPress model selected.
                             </td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td>
-                                URL attribute <code>?model=chemex</code> correcly loads the page
+                                URL attribute <code>?model=chemex</code> correctly loads the page
                                 with the Chemex model selected.
                             </td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td>
-                                URL attribute <code>?model=moka</code> correcly loads the page with
+                                URL attribute <code>?model=moka</code> correctly loads the page with
                                 the Moka model selected.
                             </td>
                             <td>-</td>
@@ -627,37 +682,102 @@
             </section>
 
             <!-- Deeper Understanding -->
-            <section id="deeper-understanding" class="border-2 border-primary p-6 shadow-md">
+            <section id="deeper-understanding" class="boxed shadow-md">
                 <h2 class="mb-2 sm:mb-4">Deeper Understanding</h2>
                 <div class="flex flex-col gap-4 sm:gap-6">
                     <div>
-                        <h3 class="text-accent">01</h3>
-                        <p>TODO</p>
+                        <h3 class="text-accent">01. Going framework-less</h3>
+                        <p>
+                            This was the first time I have developed a non-trivial (web-based)
+                            project without relying on a
+                            <strong>JavaScript</strong> framework (such as <strong>Svelte</strong>,
+                            <strong>React</strong>, or <strong>Vue</strong>).
+                            <br />
+                            It was a refreshing experience. Having to manually sync the UI to the
+                            application state (like fetching elements and setting up event
+                            listeners) is something that I rarely do otherwise, instead relying on
+                            the framework's way to handle reactivness. This more hands-on approach
+                            was a great way to practice some fundamental web development skills, and
+                            get a better understanding at how these reactive frameworks might work
+                            under the hood.
+                            <br />
+                            The deployment process was also a bit more involved than usual.
+                            Normally, I would just rely on some platform like
+                            <strong>Netlify</strong> to handle production build and deployment. This
+                            time, I had to manually build the application and copy the result to the
+                            university's server, which admitedly is a very simple process, but
+                            required me to be a bit more mindful of how <strong>Vite</strong> itself
+                            works.
+                        </p>
                     </div>
                     <div>
-                        <h3 class="text-accent">02</h3>
-                        <p>TODO</p>
+                        <h3 class="text-accent">02. Learning Blender</h3>
+                        <p>
+                            This module was my first proper introduction to
+                            <strong>Blender</strong> and 3D modelling. I really enjoyed working with
+                            it, especially the sense of progress I felt, as each new object I model
+                            felt faster, simpler, and overall better than the previous one.
+                            <br />
+                            I feel like I learned a lot about materials, modifiers, tools, and the
+                            general modelling workflow, yet I can't help but feel like I only
+                            scratched the surface of what <strong>Blender</strong> can do. Still, I
+                            am very happy with all three models (even if some are deeply flawed)!
+                        </p>
                     </div>
                     <div>
-                        <h3 class="text-accent">03</h3>
-                        <p>TODO</p>
+                        <h3 class="text-accent">03. Three.js and MVC</h3>
+                        <p>
+                            This module was also my first ever introduction to
+                            <strong>Three.js</strong>.
+                            <br />
+                            I felt quite overwhelmed at first, as even a simple scene requires a lot
+                            of components and code to setup. This, I think, was the main reason that
+                            pushed me to use the <strong>MVC</strong> pattern, to try and abstract
+                            away the bulk of the logic and state related to the 3D scene into a
+                            dedicated class. This helped me greatly to wrap my head around each
+                            component, and easily adjust the scene setup.
+                            <br />
+                            I tried to keep the scene controls and interaction simple, just adding a
+                            few features that I thought could be effective. Probably the best
+                            feature I added was using environments (<strong>HDRI</strong>) as
+                            background, which made the scene feel more 'alive', as well as providing
+                            some nice, natural ambient lighting and reflections.
+                            <br />
+                            As with <strong>Blender</strong>, I feel like I have much more to learn
+                            about <strong>Three.js</strong>.
+                        </p>
                     </div>
                     <div>
-                        <h3 class="text-accent">04</h3>
-                        <p>TODO</p>
+                        <h3 class="text-accent">04. Blender vs Three.js</h3>
+                        <p>
+                            During development I struggled significantly when exporting 3D models to
+                            <code>glb</code> files. I learned that just because something works in
+                            <strong>Blender</strong>, it doesn't necessarily mean it will export and
+                            work in <strong>Three.js</strong>.
+                            <br />
+                            It was for the most part a trial and error process, exporting the model,
+                            testing it in my application, and checking if everything worked as
+                            expected. I found that a lot of pre-made materials didn't render
+                            correctly (if at all) in <strong>Three.js</strong>. This was especially
+                            problematic for see-through materials. For these, I eventually just
+                            realized that it was easier to just make simple, custom materials
+                            myself, which might not be as polished as the 'professional', pre-made
+                            ones, but saved me a lot of headaches.
+                            <br />
+                            The same goes for animations, I found that keeping it simple was the
+                            right call for this project.
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- Implementation & Publication -->
-            <section
-                id="implementation-publication"
-                class="border-2 border-primary p-6 shadow-accent-md"
-            >
+            <section id="implementation-publication" class="boxed shadow-md">
                 <h2 class="mb-2 sm:mb-4">Implementation & Publication</h2>
                 <p>
-                    I added this page (<strong>about.html</strong>) to provide insight into the
-                    application and 3D models development, covering all points as best as I could.
+                    I added this page (<code>about.html</code>) to provide insight into the
+                    application and 3D models development, covering all sections and points (as they
+                    appear in the checklist given in week 10) as best as I could.
                 </p>
                 <h3 class="mt-4 sm:mt-6 mb-2 text-accent">Submission</h3>
                 <p>

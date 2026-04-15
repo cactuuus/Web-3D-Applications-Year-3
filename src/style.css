@@ -58,7 +58,7 @@ h3,
 }
 
 strong {
-    @apply text-accent font-bold;
+    @apply text-primary/90 font-bold;
 }
 
 code {
@@ -134,4 +134,8 @@ code {
     .sub-header-row {
         @apply bg-primary/5 text-accent;
     }
+}
+
+.caption {
+    @apply bg-primary text-white text-xs uppercase font-bold font-mono px-2 pt-2 pb-1;
 }
