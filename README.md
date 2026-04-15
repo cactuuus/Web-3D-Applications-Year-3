@@ -30,7 +30,15 @@ npm run build
 npm run preview
 ```
 
-## Project structure
+## Get Started
+
+0. Install `Node` if you haven't already (link is in the requirements section above).
+1. In the terminal, navigate to the root of the project.
+2. Run `npm install` to install the dependencies.
+3. Run `npm run dev` to start the development server.
+4. Open the URL provided in the terminal (usually `http://localhost:5173/`) in your browser to access the application.
+
+## Project Structure
 
 All of the code is in the `src` folder, except for `HTML` files, which are in the root (`/`) of the project and in `public/assets/info` (these are fragments of `HTML` that, if needed, are injected at runtime).
 
