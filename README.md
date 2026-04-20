@@ -33,7 +33,7 @@ npm run preview
 ## Get Started
 
 0. Install `Node` if you haven't already (link is in the requirements section above).
-1. In the terminal, navigate to the root of the project.
+1. In the terminal, navigate to the root of the project (where this `README.md` file is located).
 2. Run `npm install` to install the dependencies.
 3. Run `npm run dev` to start the development server.
 4. Open the URL provided in the terminal (usually `http://localhost:5173/~jc2046/`) in your browser to access the application.
